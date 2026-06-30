@@ -1,0 +1,72 @@
+{
+  "source_type": "curated_public_adl_layer",
+  "description": "Structured Activities of Daily Living templates inspired by public ADL and smart-home activity-recognition research datasets. No personal or raw participant data is included.",
+  "categories": [
+    {
+      "id": "meal_preparation",
+      "label": "Meal preparation",
+      "typical_context": "Kitchen activity before breakfast, lunch, or dinner",
+      "robot_support": ["gentle reminder", "step-by-step prompting", "hydration suggestion"],
+      "safety_notes": ["avoid giving nutrition or medication advice beyond provided care plan"]
+    },
+    {
+      "id": "medication_reminder",
+      "label": "Medication reminder",
+      "typical_context": "Medication schedule after meal or at prescribed time",
+      "robot_support": ["time reminder", "confirmation prompt", "caregiver escalation if repeatedly skipped"],
+      "safety_notes": ["do not change dosage", "do not recommend new medication"]
+    },
+    {
+      "id": "mobility_exercise",
+      "label": "Mobility exercise",
+      "typical_context": "Low-intensity movement or seated exercise",
+      "robot_support": ["calm encouragement", "short instructions", "stop if discomfort is reported"],
+      "safety_notes": ["avoid intense activity for mobility-limited patients"]
+    },
+    {
+      "id": "hydration",
+      "label": "Hydration",
+      "typical_context": "Routine water intake reminder",
+      "robot_support": ["gentle reminder", "progress confirmation"],
+      "safety_notes": ["respect clinician-specific fluid restrictions if present"]
+    },
+    {
+      "id": "personal_hygiene",
+      "label": "Personal hygiene",
+      "typical_context": "Morning or evening routine",
+      "robot_support": ["routine reminder", "privacy-preserving prompt"],
+      "safety_notes": ["avoid invasive monitoring"]
+    },
+    {
+      "id": "social_engagement",
+      "label": "Social engagement",
+      "typical_context": "Call family member, attend group activity, or light conversation",
+      "robot_support": ["mood-aware encouragement", "conversation starter"],
+      "safety_notes": ["do not simulate human relationships deceptively"]
+    },
+    {
+      "id": "sleep_routine",
+      "label": "Sleep routine",
+      "typical_context": "Evening wind-down or sleep preparation",
+      "robot_support": ["calm reminder", "environmental checklist"],
+      "safety_notes": ["do not diagnose sleep disorders"]
+    }
+  ],
+  "public_dataset_references": [
+    {
+      "name": "DAMMI",
+      "focus": "elderly daily activities, IoT sensors, smartphone, wristband, psychological daily reports",
+      "use_in_project": "reference schema for daily activity streams and scenario design"
+    },
+    {
+      "name": "CASAS smart home datasets",
+      "focus": "smart-home sensor activity-recognition datasets",
+      "use_in_project": "reference vocabulary for home activity event templates"
+    },
+    {
+      "name": "LSC-ADL annotations",
+      "focus": "ADL-annotated lifelog activity layer",
+      "use_in_project": "reference for activity labels and semantic retrieval demos"
+    }
+  ]
+}
