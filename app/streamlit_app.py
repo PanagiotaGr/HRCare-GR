@@ -9,6 +9,7 @@ from app.nodes.progress_checker import check_progress
 from app.utils.config import get_settings
 from app.utils.llm import get_llm
 from app.utils.logging import save_session_log
+from app.utils.public_adl import load_adl_scenarios, load_adl_templates
 
 
 st.set_page_config(page_title="HRCare-GR", page_icon="🤖", layout="wide")
@@ -20,13 +21,19 @@ st.warning(
 )
 
 settings = get_settings()
+adl_scenarios = load_adl_scenarios()
+adl_templates = load_adl_templates()
+scenario_options = {f"{s['title']} ({s['id']})": s for s in adl_scenarios}
 
 with st.sidebar:
     st.header("Simulation settings")
     patient_id = st.selectbox("Patient", ["P001", "P002"])
-    simulation_time = st.text_input("Start time", value="08:00")
+    scenario_label = st.selectbox("Public ADL scenario", list(scenario_options.keys()))
+    selected_scenario = scenario_options[scenario_label]
+    simulation_time = st.text_input("Start time", value=selected_scenario["events"][0]["time"])
     doctor_instructions = st.text_area(
         "Doctor instructions",
+        value=selected_scenario["robot_goal"],
         placeholder="π.χ. Υπενθύμιση φυσικοθεραπείας στις 12:00",
     )
     provider = st.selectbox("LLM provider", ["mock", "openai"], index=0 if settings.llm_provider == "mock" else 1)
@@ -50,6 +57,10 @@ def activity_table(state: GraphState) -> pd.DataFrame:
     )
 
 
+def scenario_event_table(scenario: dict) -> pd.DataFrame:
+    return pd.DataFrame(scenario["events"])
+
+
 if "state" not in st.session_state:
     st.session_state.state = None
 
@@ -59,9 +70,12 @@ if st.button("Generate / Reset daily plan", type="primary"):
         doctor_instructions=doctor_instructions,
         simulation_time=simulation_time,
     )
-    st.session_state.state = initialize_daily_plan(state)
+    state = initialize_daily_plan(state)
+    state.retrieved_notes.append(f"Selected ADL scenario: {selected_scenario['title']} — {selected_scenario['robot_goal']}")
+    st.session_state.state = state
     st.session_state.provider = provider
     st.session_state.model = model
+    st.session_state.selected_scenario = selected_scenario
     st.success("Daily plan generated.")
 
 state: GraphState | None = st.session_state.state
@@ -69,6 +83,8 @@ state: GraphState | None = st.session_state.state
 if state is None:
     st.warning("Generate a daily plan to start the simulation.")
     st.stop()
+
+active_scenario = st.session_state.get("selected_scenario", selected_scenario)
 
 left, right = st.columns([1.1, 0.9])
 
@@ -81,8 +97,18 @@ with left:
         st.write("**Preferences:** " + ", ".join(state.patient.preferences))
         st.write("**Constraints:** " + ", ".join(state.patient.constraints))
 
+    st.subheader("Public ADL scenario")
+    st.write(f"**Scenario:** {active_scenario['title']}")
+    st.write(f"**Patient state:** {active_scenario['patient_state']}")
+    st.write(f"**Robot goal:** {active_scenario['robot_goal']}")
+    st.dataframe(scenario_event_table(active_scenario), use_container_width=True, hide_index=True)
+
     st.subheader("Daily plan")
     st.dataframe(activity_table(state), use_container_width=True, hide_index=True)
+
+    with st.expander("ADL activity knowledge layer"):
+        st.write(adl_templates["description"])
+        st.dataframe(pd.DataFrame(adl_templates["categories"]), use_container_width=True, hide_index=True)
 
     if state.warnings:
         st.subheader("Safety warnings")
