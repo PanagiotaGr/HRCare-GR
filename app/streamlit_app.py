@@ -15,6 +15,9 @@ st.set_page_config(page_title="HRCare-GR", page_icon="🤖", layout="wide")
 
 st.title("🤖 HRCare-GR")
 st.caption("Hybrid LLM + rule-based assistive robot simulation for Greek elderly care")
+st.warning(
+    "Research demo only: this system uses synthetic/anonymized profiles and must not be used for real medical decisions."
+)
 
 settings = get_settings()
 
