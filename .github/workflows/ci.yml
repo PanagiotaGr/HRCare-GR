@@ -9,6 +9,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: ${{ github.workspace }}
 
     steps:
       - name: Checkout
@@ -25,7 +27,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run tests
-        run: pytest
+        run: python -m pytest
 
       - name: Import check
         run: python -c "from app.graph.workflow import initialize_daily_plan; print('import ok')"
