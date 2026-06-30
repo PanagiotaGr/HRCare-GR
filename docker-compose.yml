@@ -1,0 +1,10 @@
+services:
+  hrcare-gr:
+    build: .
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    volumes:
+      - ./experiments/logs:/app/experiments/logs
+    restart: unless-stopped
