@@ -82,8 +82,8 @@ python -m app.main
 
 ## Example patient IDs
 
-- `P001`: Maria Papadopoulou
-- `P002`: Nikos Antoniou
+- `P001`: NAME peson 1
+- `P002`: NAME person 2
 
 ## Research angle
 
