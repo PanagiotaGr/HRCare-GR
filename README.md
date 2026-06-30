@@ -87,9 +87,7 @@ python -m app.main
 
 ## Research angle
 
-Possible university title:
 
-> A Hybrid LLM and Rule-Based Architecture for Personalized Human-Robot Collaboration in Elderly Care Environments
 
 Possible evaluation metrics:
 
