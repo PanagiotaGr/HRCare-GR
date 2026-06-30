@@ -124,7 +124,7 @@ with right:
         state.conversation.append(InteractionTurn(speaker="robot", text=robot_reply))
 
         if state.current_activity_id:
-            state = check_progress(state, patient_message)
+            state = check_progress(state, patient_message, record_reply=False)
 
         st.session_state.state = state
         st.rerun()
