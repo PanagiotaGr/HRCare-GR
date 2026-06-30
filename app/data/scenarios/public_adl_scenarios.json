@@ -1,0 +1,58 @@
+{
+  "description": "Realistic demo scenarios based on Activities of Daily Living concepts. These are synthetic scenarios derived from public ADL research themes, not real patient records.",
+  "scenarios": [
+    {
+      "id": "morning_routine",
+      "title": "Morning routine support",
+      "patient_state": "calm",
+      "events": [
+        {"time": "08:00", "activity": "wake_up", "signal": "bedroom_motion"},
+        {"time": "08:20", "activity": "personal_hygiene", "signal": "bathroom_presence"},
+        {"time": "08:45", "activity": "breakfast", "signal": "kitchen_presence"},
+        {"time": "09:10", "activity": "medication_reminder", "signal": "care_plan_due"}
+      ],
+      "robot_goal": "Support the patient through breakfast and medication without rushing."
+    },
+    {
+      "id": "missed_medication",
+      "title": "Medication reminder not confirmed",
+      "patient_state": "distracted",
+      "events": [
+        {"time": "09:00", "activity": "medication_reminder", "signal": "care_plan_due"},
+        {"time": "09:10", "activity": "no_confirmation", "signal": "patient_no_response"},
+        {"time": "09:20", "activity": "second_prompt", "signal": "follow_up_required"}
+      ],
+      "robot_goal": "Ask calmly again and suggest notifying a caregiver if confirmation remains missing."
+    },
+    {
+      "id": "low_mobility_exercise",
+      "title": "Low-mobility seated exercise",
+      "patient_state": "mild_fatigue",
+      "events": [
+        {"time": "10:30", "activity": "seated_mobility_exercise", "signal": "scheduled_activity"},
+        {"time": "10:35", "activity": "fatigue_reported", "signal": "patient_feedback"}
+      ],
+      "robot_goal": "Encourage safe, low-intensity movement and stop if discomfort is reported."
+    },
+    {
+      "id": "hydration_gap",
+      "title": "Long gap without hydration",
+      "patient_state": "neutral",
+      "events": [
+        {"time": "08:30", "activity": "breakfast", "signal": "meal_detected"},
+        {"time": "11:45", "activity": "hydration_missing", "signal": "no_water_event"}
+      ],
+      "robot_goal": "Provide a gentle hydration reminder unless fluid restriction is present."
+    },
+    {
+      "id": "social_isolation",
+      "title": "Reduced social interaction",
+      "patient_state": "low_mood",
+      "events": [
+        {"time": "14:00", "activity": "quiet_period", "signal": "low_activity"},
+        {"time": "16:00", "activity": "no_social_event", "signal": "no_call_or_visit"}
+      ],
+      "robot_goal": "Suggest a light conversation or a call with family without pressuring the patient."
+    }
+  ]
+}
