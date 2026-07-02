@@ -4,7 +4,7 @@ from rich.console import Console
 from rich.table import Table
 
 from app.graph.state import GraphState
-from app.graph.workflow import initialize_daily_plan, run_next_robot_turn
+from app.graph.workflow import finalize_session, initialize_daily_plan, run_next_robot_turn
 from app.nodes.progress_checker import check_progress
 from app.utils.config import get_settings
 from app.utils.logging import save_session_log
@@ -40,6 +40,11 @@ def main() -> None:
     state = initialize_daily_plan(state)
 
     console.print(f"\nLoaded patient: [bold]{state.patient.name if state.patient else patient_id}[/bold]")
+    if state.memory_notes:
+        console.print("\n[blue]Memory context[/blue]")
+        for note in state.memory_notes:
+            console.print(f"- {note}")
+
     print_plan(state)
 
     if state.warnings:
@@ -57,6 +62,7 @@ def main() -> None:
         reply = input("Patient reply: ").strip()
         state = check_progress(state, reply)
 
+    state = finalize_session(state)
     log_path = save_session_log(state, settings.log_dir)
     console.print(f"\n[green]Session completed.[/green] Log saved at: {log_path}")
 

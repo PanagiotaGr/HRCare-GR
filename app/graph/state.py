@@ -45,6 +45,7 @@ class GraphState(BaseModel):
     simulation_time: str = "08:00"
     patient: PatientProfile | None = None
     retrieved_notes: list[str] = Field(default_factory=list)
+    memory_notes: list[str] = Field(default_factory=list)
     activities: list[Activity] = Field(default_factory=list)
     current_activity_id: str | None = None
     conversation: list[InteractionTurn] = Field(default_factory=list)
