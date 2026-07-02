@@ -65,7 +65,10 @@ hrcare-gr/
 │       ├── config.py
 │       ├── llm.py
 │       └── logging.py
+├── docs/
+│   └── evaluation.md
 ├── experiments/
+│   └── evaluate_scenarios.py
 ├── tests/
 ├── .env.example
 ├── requirements.txt
@@ -92,6 +95,22 @@ Run the Streamlit application:
 ```bash
 streamlit run app/streamlit_app.py
 ```
+
+## Evaluation
+
+Run the synthetic scenario evaluation:
+
+```bash
+python experiments/evaluate_scenarios.py
+```
+
+The evaluation script writes JSON and CSV outputs to:
+
+```text
+experiments/results/
+```
+
+See `docs/evaluation.md` for the protocol, metrics, and suggested thesis use.
 
 ## OpenAI mode
 
@@ -127,6 +146,7 @@ If the provider is `mock`, no API key is required.
 - task completion metrics
 - session logging
 - mock/OpenAI LLM provider abstraction
+- synthetic scenario evaluation
 
 ## Research angle
 
